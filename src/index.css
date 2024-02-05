@@ -36,7 +36,8 @@ h1{
   position: fixed;
   left: 50%;
   transform: translate(-50%, 0); 
-  top: 15%;
+  top: 3%;
+  font-size: 70px;
 }
 
 .center{
@@ -44,28 +45,39 @@ h1{
   top: 55%;
   left: 50%;
   transform: translate(-50%, -50%); 
+  margin-top: 35px;
 }
 
 .button{
   background-color: #0077B8;
-  border-radius: 30px;
-  width: 404px;
-  height: 101px;
+  border-radius: 25px;
+  border: none;
+  width: 350px;
+  height: 80px;
   font-weight: 500;
   font-size: 40px;
 }
 
 .buttonInput{
-  background-color: #0077B8;
-  border-radius: 30px;
-  width: 404px;
-  height: 179px;
+  background-color: hsl(201, 100%, 36%);
+  border-radius: 25px;
+  border: none;
+  width: 350px;
+  height: 140px;
   font-weight: 500;
   font-size: 40px;
+  margin-top: 30px;
 }
 
 .input{
   background-color: #00B4D8;
-  width: 288px;
-  height: 52px;
+  border: none;
+  border-radius: 15px;
+  width: 250px;
+  height: 40px;
+}
+input::placeholder {
+  color: white;
+  text-align: center;
+
 }
