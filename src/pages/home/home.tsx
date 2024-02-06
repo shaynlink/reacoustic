@@ -1,4 +1,12 @@
+import useSocket from '../../hooks/useSocket'
+
 function Home (): JSX.Element {
+  const { socketReady } = useSocket()
+
+  if (!socketReady) {
+    return <h1>{'Loading to connection...'}</h1>
+  }
+
   return (
     <>
       <h1>{'REACOUSTIC'}</h1><br /><br />
