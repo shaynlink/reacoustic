@@ -144,7 +144,7 @@ export default class Gateway {
     // Create a server with the express app
     this.server = http.createServer(this.app);
     // Listen on port 8080
-    this.server.listen(8080);
+    this.server.listen(process.env.PORT || 8080);
     this.server.on('listening', () => {
       console.log('Server is listening on port 8080');
     })
