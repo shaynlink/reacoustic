@@ -1,9 +1,13 @@
 import express from 'express';
+import cors from 'cors';
 import Node from './class/Node.mjs';
 
 export default function handler() {
   // Use express.json() to parse the body of the request
   this.app.use(express.json());
+
+  // Use cors() to allow cross-origin requests
+  this.app.use(cors());
 
   // Middleware to check if the user is authenticated
   this.app.use((req, res, next) => {
