@@ -81,3 +81,47 @@ input::placeholder {
   text-align: center;
 
 }
+
+.end-game-body{
+    /*centrer les item*/
+}
+
+.scoreboard-container {
+  background-color: #0077B8;
+  color: white;
+  border-radius: 15px;
+  padding: 15px;
+  font-family: Arial, sans-serif;
+  margin-bottom: 20px;
+}
+
+.player-scores {
+  list-style: none;
+  padding: 0;
+}
+
+.player-score-item {
+  background-color: #00B2D6;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.score {
+  font-weight: bold;
+}
+
+.restart-game-btn, .leave-game-btn {
+  background-color: #0077B8;
+  border: none;
+  color: white;
+  margin-bottom: 10px; 
+  width: 100%; 
+  cursor: pointer;
+  border-radius: 15px;
+  padding: 15px;
+  font-size: 15px;
+}
