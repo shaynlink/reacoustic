@@ -76,8 +76,86 @@ h1{
   width: 250px;
   height: 40px;
 }
+
 input::placeholder {
   color: white;
   text-align: center;
 
 }
+
+.lobby-container {
+  place-items: center;
+}
+
+.line-room {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.stat-room {
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.settings {
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.player-list {
+  background-color: #0077B8;
+  list-style: none;
+  border-radius: 15px;
+  padding: 15px;
+}
+
+.player-item {
+  background-color: #00B4D8;
+  border-radius: 10px;
+  padding: 8px;
+  margin-bottom: 5px;
+  font-size: 90%;
+}
+
+.playerName-homeButton {
+  display: flex;
+  flex-direction: column;
+}
+
+.current-player {
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+   
+}
+.home-button {
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+  margin-left: 5px;
+}
+.link{
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.game-code {
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.start-game-btn {
+  background-color: #0077B8;
+  border-radius: 15px;
+  border: none;
+  color: white;
+  padding: 15px;
+  font-size: 15px;
+}
+
