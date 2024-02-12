@@ -10,7 +10,8 @@ function Room (): JSX.Element {
           <span>2 choices</span>
         </div>
         <div className="settings">
-          <button>Set</button>
+        {/* <svg data-testid="SettingsIcon"></svg> */}
+        <span>set</span>
         </div>
       </div>
       <ul className="player-list">
