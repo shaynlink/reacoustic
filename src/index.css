@@ -18,6 +18,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -31,24 +32,24 @@ body {
   background-color: #C9F0F8;
 }
 
-h1{
-  color:#03045E;
+h1 {
+  color: #03045E;
   position: fixed;
   left: 50%;
-  transform: translate(-50%, 0); 
+  transform: translate(-50%, 0);
   top: 3%;
   font-size: 70px;
 }
 
-.center{
+.center {
   position: fixed;
   top: 55%;
   left: 50%;
-  transform: translate(-50%, -50%); 
+  transform: translate(-50%, -50%);
   margin-top: 35px;
 }
 
-.button{
+.button {
   background-color: #0077B8;
   border-radius: 25px;
   border: none;
@@ -58,7 +59,7 @@ h1{
   font-size: 40px;
 }
 
-.buttonInput{
+.buttonInput {
   background-color: hsl(201, 100%, 36%);
   border-radius: 25px;
   border: none;
@@ -69,15 +70,144 @@ h1{
   margin-top: 30px;
 }
 
-.input{
+.input {
   background-color: #00B4D8;
   border: none;
   border-radius: 15px;
   width: 250px;
   height: 40px;
 }
+
 input::placeholder {
   color: white;
   text-align: center;
 
+}
+
+.lobby-container {
+  place-items: center;
+}
+
+.line-room {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 5px;
+}
+
+.stat-room {
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.settings {
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.player-list {
+  background-color: #0077B8;
+  list-style: none;
+  border-radius: 15px;
+  padding: 15px;
+}
+
+.player-item {
+  background-color: #00B4D8;
+  border-radius: 10px;
+  padding: 8px;
+  margin-bottom: 5px;
+  font-size: 90%;
+}
+
+.playerName-homeButton {
+  display: flex;
+  flex-direction: column;
+}
+
+.current-player {
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+  width: 100%;
+}
+
+.home-button {
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.link {
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.game-code {
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+  width: 100%;
+  margin-left: 10px;
+  text-align: center;
+}
+
+.start-game-btn {
+  background-color: #0077B8;
+  border-radius: 15px;
+  border: none;
+  color: white;
+  padding: 15px;
+  font-size: 15px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.end-game-body {
+  /*centrer les item*/
+}
+
+.scoreboard-container {
+  background-color: #0077B8;
+  color: white;
+  border-radius: 15px;
+  padding: 15px;
+  font-family: Arial, sans-serif;
+  margin-bottom: 20px;
+}
+
+.player-scores {
+  list-style: none;
+  padding: 0;
+}
+
+.player-score-item {
+  background-color: #00B2D6;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.score {
+  font-weight: bold;
+}
+
+.restart-game-btn,
+.leave-game-btn {
+  background-color: #0077B8;
+  border: none;
+  color: white;
+  margin-bottom: 10px;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 15px;
+  padding: 15px;
+  font-size: 15px;
 }
