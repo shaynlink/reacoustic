@@ -1,7 +1,27 @@
-import useSocket from '../../hooks/useSocket'
+import { useEffect } from 'react'
+import useSocket, { OpCodeServer, OpCodeClient } from '../../hooks/useSocket'
 
 function Home (): JSX.Element {
-  const { socketReady } = useSocket()
+  const { socketReady, send, subscribe } = useSocket()
+
+  useEffect(() => {
+    const unsubscribe = subscribe(OpCodeClient.AUTHENTIFICATED, () => {
+    })
+
+    return () => {
+      unsubscribe()
+    }
+  }, [])
+
+  useEffect(() => {
+    if (socketReady) {
+      console.log('socket ready')
+      send(OpCodeServer.AUTHENTIFICATION, {
+        username: 'test',
+        uuid: window.localStorage.getItem('uuid')
+      })
+    }
+  }, [socketReady])
 
   if (!socketReady) {
     return <h1>{'Loading to connection...'}</h1>

@@ -1,9 +1,10 @@
 // eslint-disable-next-line @typescript-eslint/triple-slash-reference
 /// <reference types="vite/client" />
-import type { Socket } from 'socket.io-client'
+import type Queue from './Queue'
 
-declare global {
+export declare global {
   interface Window {
-    socket?: Socket
+    socket?: WebSocket
+    socketQueue: Queue
   }
 }

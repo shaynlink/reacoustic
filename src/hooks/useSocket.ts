@@ -1,85 +1,110 @@
 import { useEffect, useState } from 'react'
-import { io, type Socket } from 'socket.io-client'
+import Queue from '../Queue'
 
-const OP_CODE_TO_SERVER = {
-  AUTHENTIFICATION: 'authentification'
+export interface SocketHook {
+  socket: WebSocket | null
+  socketReady: boolean
+  send: (op: OpCodeServer, data: PayloadData) => void
+  subscribe: (op: OpCodeClient, fn: any) => () => void
 }
 
-export interface Sockethook {
-  socket: Socket | null
-  socketReady: boolean
+export enum OpCodeServer {
+  AUTHENTIFICATION = 'authentification',
+}
+
+export enum OpCodeClient {
+  AUTHENTIFICATED = 'authentificated',
+}
+
+type PayloadData = AuthentificationPayload
+
+interface ResponseMessage<T extends PayloadData = PayloadData> {
+  op: OpCodeServer
+  d: T extends AuthentificationPayload
+    ? AuthentificationPayload
+    : PayloadData
+}
+
+interface AuthentificationPayload {
+  uuid: string | null
+  username?: string
+  color?: string
 }
 
 interface Subscription {
   id: string
-  fn: (data: any) => void
-  unsubscribe: () => void
-  type: string
+  fn: any
+  op: OpCodeClient
 }
 
-export default function useSocket (): Sockethook {
-  const [socket, setSocket] = useState<Socket | null>(null)
-  const [socketReady, setSocketReady] = useState(false)
-  const [subscribers, setSubscribers] = useState<Subscription[]>([])
+export default function useSocket (): SocketHook {
+  const [socket, setSocket] = useState<SocketHook['socket']>(null)
+  const [socketReady, setSocketReady] = useState<boolean>(false)
+  const [subscriptions, setSubscriptions] = useState<Subscription[]>([])
 
-  const handleResponseSubscription = (type: Subscription['type']): ((fn: Subscription['fn']) => void) => {
-    return (fn: Subscription['fn']) => {
-      const id = Math.random().toString(36).substring(2, 9)
+  if (window.socketQueue === undefined) {
+    window.socketQueue = new Queue<ResponseMessage>()
+  }
 
-      const unsubscribe = (): void => {
-        setSubscribers((subs) => subs.filter((sub) => sub.id !== id))
-      }
+  const handleSend = (op: OpCodeServer, data: PayloadData): void => {
+    if (window.socket === undefined || window.socket?.readyState !== window.socket?.OPEN) {
+      window.socketQueue.add({ op, data })
+    } else {
+      window.socket.send(JSON.stringify({ op, data }))
+    }
+  }
 
-      setSubscribers((subs) => [...subs, { id, fn, unsubscribe, type }])
+  const handleSubscribe = (op: OpCodeClient, fn: any): (() => void) => {
+    const id = Math.random().toString(36).substring(7) + Date.now()
+
+    setSubscriptions((subs) => [...subs, { id, op, fn }])
+
+    return () => {
+      setSubscriptions((subs) => subs.filter((sub) => sub.id !== id))
     }
   }
 
   useEffect(() => {
-    const handlesocketConnect = (): void => {
-      console.log('Socket connected')
+    const handleOpenListener = (): void => {
+      console.log('Socket is connected')
+      if (window.socket !== undefined) {
+        for (const message of window.socketQueue.iterable()) {
+          window.socket.send(JSON.stringify(message))
+        }
+      }
       setSocketReady(true)
     }
 
-    const handleEventListener = (type: Subscription['type']) => {
-      return (message: any) => {
-        console.log('[%s] Message received ->', type, message)
-        subscribers
-          .filter((sub) => sub.type === type)
-          .forEach(({ fn }) => { fn(message) })
-      }
+    const handleMessageListener = (event: MessageEvent): void => {
+      console.log(event)
     }
 
-    const authentificationHandler = handleEventListener(OP_CODE_TO_SERVER.AUTHENTIFICATION)
-
-    const handleMessageListener = (messages: any): void => {
-      console.log('Message received ->', messages)
-    }
-
-    if (window.socket !== undefined) {
-      if (window.socket.connected) {
+    if (window.socket === undefined) {
+      const socket = new WebSocket('wss://reacoustic-2fqcvdzp6q-uc.a.run.app/')
+      window.socket = socket
+      window.socket.addEventListener('open', handleOpenListener)
+    } else {
+      if (window.socket.readyState === window.socket.OPEN) {
         setSocketReady(true)
       } else {
-        window.socket.on('connect', handlesocketConnect)
+        window.socket.addEventListener('open', handleOpenListener)
       }
-      window.socket.on('message', authentificationHandler)
-      setSocket(window.socket)
-    } else {
-      const socket = io('https://reacoustic-2fqcvdzp6q-uc.a.run.app/')
-      window.socket = socket
-      window.socket.on('connect', handlesocketConnect)
-      setSocket(socket)
     }
 
-    window.socket.on('message', handleMessageListener)
+    window.socket.addEventListener('message', handleMessageListener)
+
+    setSocket(window.socket)
 
     return () => {
-      window.socket?.off('connect', handlesocketConnect)
-      window.socket?.off('message', handleMessageListener)
+      window.socket?.removeEventListener('open', handleOpenListener)
+      window.socket?.removeEventListener('message', handleMessageListener)
     }
   }, [])
 
   return {
     socket,
-    socketReady
+    socketReady,
+    send: handleSend,
+    subscribe: handleSubscribe
   }
 }
