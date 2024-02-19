@@ -32,7 +32,7 @@ export default function handler() {
   })
 
   this.app.get('/getSongs', async (req, res) => {
-    const playlist = req.body.playlist;
+    const playlist = req.query.playlist;
 
     if (!playlist) {
       res.status(400).json({ error: 'No playlist found' });
