@@ -21,8 +21,14 @@ function Game(): JSX.Element {
   const [round, setRound] = useState(1)
   const maxTime = 900
   const playlist = 'https://www.youtube.com/playlist?list=PL4fGSI1pDJn7bK3y1Hx-qpHBqfr6cesNs'
-  const { data, error, isLoading } = useSWR('/getSongs', (url) => fetcher(url, playlist))
+  const { data, error, isLoading } = useSWR('/getSongs', async (url) => await fetcher(url, playlist))
 
+  if (isLoading) return <div>Fetching songs...</div>
+
+  // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+  if (error) return <div>Failed to fetch songs</div>
+
+  console.log(data)
 
   const handleTimeout = () => {
     console.log('Time is out')
