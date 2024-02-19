@@ -4,8 +4,8 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: rgba(31, 31, 31, 0.87);
+  background-color: #C9F0F8;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -15,29 +15,18 @@
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: inherit;
   text-decoration: inherit;
 }
 
-a:hover {
-  color: #535bf2;
-}
-
+html,
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-  background-color: #C9F0F8;
+  padding: 0;
 }
 
 h1 {
   color: #03045E;
-  position: fixed;
-  left: 50%;
-  transform: translate(-50%, 0);
-  top: 3%;
   font-size: 70px;
 }
 
@@ -82,10 +71,6 @@ input::placeholder {
   color: white;
   text-align: center;
 
-}
-
-.lobby-container {
-  place-items: center;
 }
 
 .line-room {

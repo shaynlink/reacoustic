@@ -1,0 +1,26 @@
+.line {
+  background-color: #0077B8;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  color: white;
+  gap: 2rem;
+  padding: 0 20px;
+  height: 55px;
+  font-size: large;
+  width: 100%;
+
+  &.square {
+    width: 75px;
+    justify-content: center;
+    padding: inherit;
+  }
+}
+
+.playerItem {
+  background-color: #00B4D8;
+  border-radius: 10px;
+  padding: 8px;
+  margin-bottom: 5px;
+  color: white;
+}

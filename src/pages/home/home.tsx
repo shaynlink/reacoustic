@@ -1,41 +1,30 @@
-import { useEffect } from 'react'
-import useSocket, { OpCodeServer, OpCodeClient } from '../../hooks/useSocket'
+import { Link } from 'react-router-dom'
 
-function Home (): JSX.Element {
-  const { socketReady, send, subscribe } = useSocket()
+import Container from '@mui/material/Container'
+import Stack from '@mui/material/Stack'
+import Box from '@mui/material/Box'
 
-  useEffect(() => {
-    const unsubscribe = subscribe(OpCodeClient.AUTHENTIFICATED, () => {
-    })
-
-    return () => {
-      unsubscribe()
-    }
-  }, [])
-
-  useEffect(() => {
-    if (socketReady) {
-      console.log('socket ready')
-      send(OpCodeServer.AUTHENTIFICATION, {
-        username: 'test',
-        uuid: window.localStorage.getItem('uuid')
-      })
-    }
-  }, [socketReady])
-
-  if (!socketReady) {
-    return <h1>{'Loading to connection...'}</h1>
-  }
-
+function Home(): JSX.Element {
   return (
-    <>
-      <h1>{'REACOUSTIC'}</h1><br /><br />
-      <div className="center">
-        <button className="button">{'SOLO'}</button><br /><br />
-        <button className="button">{'MULTIPLAYER'}</button><br /><br />
-        <button className="buttonInput">{'JOIN ROOOM'}<br /><input className="input" placeholder={'enter code ...'}></input></button>
-      </div>
-    </>
+    <Container>
+      <Stack
+        alignItems="center"
+        justifyContent="center"
+        spacing={10}
+        sx={{ minHeight: '100vh' }}
+      >
+        <h1>REACOUSTIC</h1>
+
+        <Stack alignItems="center" spacing={2}>
+          <button className="button">SOLO</button>
+          <button className="button"><Link to="room">MULTIPLAYER</Link></button>
+          <Box sx={{ paddingTop: '1rem' }}>
+            <button className="buttonInput">JOIN ROOOM<input className="input" placeholder={'enter code ...'}></input></button>
+          </Box>
+        </Stack>
+
+      </Stack>
+    </Container>
   )
 }
 
