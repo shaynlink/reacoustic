@@ -30,6 +30,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
   background-color: #C9F0F8;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {
@@ -210,4 +212,55 @@ input::placeholder {
   border-radius: 15px;
   padding: 15px;
   font-size: 15px;
+}
+
+.game {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.time-bar {
+  height: 15px;
+  background-color: #8FE1EF; 
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.time-progress {
+  height: 100%;
+  background-color: #00B2D6; 
+  border-radius: 10px;
+}
+
+.score-text {
+  text-align: center;
+  margin-bottom: 20px;
+  
+  color: #03045E;
+  font-weight: bold;
+  font-size: 25px;
+
+}
+
+.track-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.track-button {
+  background-color: #0077B8; 
+  color: white; 
+  border: none;
+  border-radius: 10px;
+  padding: 12px; 
+  cursor: pointer;
+  padding-left: 30px;
+  padding-right: 30px;
+  font-size: 20px;
+}
+
+.track-button:hover {
+  opacity: 0.8; 
 }
