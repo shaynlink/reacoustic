@@ -42,14 +42,12 @@ function Room (): JSX.Element {
         <Link to="/">
         <div className= "home-button">
         <img src={home} alt="Home"/>
-        {/*<span>home</span>*/} 
         </div>
         </Link>
       </div>
       <div className="line-room">
         <div className="link">
         <img src={link} alt=""/>
-          {/*<span>link</span>*/}
         </div>
         <div className="game-code">
           <span>{gameCode}</span>
