@@ -11,7 +11,7 @@ export default function Timer({ maxTime, onTimeout, start }: Readonly<TimerProps
 
   useEffect(() => {
     if (start) {
-      let _time = time;
+      let _time = time
       const interval = setInterval(() => {
         if (_time >= maxTime) {
           clearInterval(interval)
@@ -20,7 +20,7 @@ export default function Timer({ maxTime, onTimeout, start }: Readonly<TimerProps
         setTime((prevTime) => prevTime + 1)
         _time++
       }, 1000)
-  
+
       return () => {
         clearInterval(interval)
       }

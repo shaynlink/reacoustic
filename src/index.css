@@ -275,3 +275,32 @@ input::placeholder {
 .track-button:hover {
   opacity: 0.8; 
 }
+
+
+.Settings{
+  justify-content: space-between;
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.Slider{
+  -webkit-appearance: none;
+  appearance: none;
+  background: #00B4D8;
+  border:'1px solid blue';
+  border-radius: 5px;
+  outline: none;
+  height: 2px;
+}
+
+.Slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 100px;
+  background: #00B4D8;
+  cursor: pointer;
+}

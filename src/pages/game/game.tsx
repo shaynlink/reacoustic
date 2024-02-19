@@ -11,7 +11,7 @@ interface Track {
   contentDetails: {
     videoId: string
     videoPublishedAt: string
-  },
+  }
   parsedTitlle: string
   choosed?: boolean
 }
@@ -29,7 +29,7 @@ function Game(): JSX.Element {
   const [round, setRound] = useState(1)
   const [startTime, setStartTime] = useState(false)
   const [usedTracks, setUsedTracks] = useState<Track[]>([])
-  const maxTime = 30
+  const maxTime = 120
   const playlist = 'PL4fGSI1pDJn7bK3y1Hx-qpHBqfr6cesNs'
   const [selectedTracks, setSelectedTracks] = useState<Track[]>([]);
   const [songUrl, setSongUrl] = useState<string>('')
@@ -81,11 +81,11 @@ function Game(): JSX.Element {
       <Timer key={round} start={startTime} maxTime={maxTime} onTimeout={handleTimeout} />
       <div className="score-text">{score} pt</div>
       <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', paddingBottom: '2rem'}}>
-        {songUrl !== '' && <Player key={songUrl} id={songUrl} onPlay={() => setStartTime(true)} />}
+        {songUrl !== '' && <Player key={songUrl} id={songUrl} onPlay={() => { setStartTime(true) }} />}
       </div>
       <div className="track-list">
         {selectedTracks.map((track) => (
-          <button key={track.id} className="track-button" onClick={() => handlePlayerResponse(track)}>
+          <button key={track.id} className="track-button" onClick={() => { handlePlayerResponse(track) }}>
             {track.parsedTitlle}
           </button>
         ))}

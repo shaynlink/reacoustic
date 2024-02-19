@@ -12,10 +12,12 @@
   "dependencies": {
     "@mui/icons-material": "^5.15.10",
     "axios": "^1.6.7",
+    "swr": "^2.2.5",
+    "jotai": "^2.6.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.0",
-    "swr": "^2.2.5"
+    "react-slider": "^2.0.6"
   },
   "devDependencies": {
     "@types/react": "^18.2.43",
