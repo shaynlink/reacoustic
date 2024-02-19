@@ -1,23 +1,36 @@
+import { useState } from 'react'
+import Timer from '../../components/Timer/Timer'
+import axios from 'axios'
+import useSWR from 'swr'
+
 interface Track {
   name: string
   artist: string
 }
 
-function Game (): JSX.Element {
-  const score = 964
-  const time = 900
-  const tracks: Track[] = [
-    { name: 'First track', artist: 'First artiste' },
-    { name: 'Second track', artist: 'Second artiste' },
-    { name: 'Third track', artist: 'Third artiste' },
-    { name: 'Fourth track', artist: 'Fourth artiste' }
-  ]
+const fetcher = (url: string, playlist: string) => {
+  return axios.get(url, {
+    params: {
+      playlist
+    }
+  }).then((res) => res.data)
+}
+
+function Game(): JSX.Element {
+  const [score, setScore] = useState(0)
+  const [round, setRound] = useState(1)
+  const maxTime = 900
+  const playlist = 'https://www.youtube.com/playlist?list=PL4fGSI1pDJn7bK3y1Hx-qpHBqfr6cesNs'
+  const { data, error, isLoading } = useSWR('/getSongs', (url) => fetcher(url, playlist))
+
+
+  const handleTimeout = () => {
+    console.log('Time is out')
+  }
 
   return (
     <div className="game">
-      <div className="time-bar">
-        <div className="time-progress" style={{ width: `${time / 10}%` }}></div>
-      </div>
+      <Timer key={round} maxTime={maxTime} onTimeout={handleTimeout} />
       <div className="score-text">{score} pt</div>
       <div className="track-list">
         {tracks.map((track, index) => (
