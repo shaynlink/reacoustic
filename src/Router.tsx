@@ -21,6 +21,7 @@ const router = createBrowserRouter([
     path: '/game',
     element: <Game />
   }
+
 ])
 
 export default router
