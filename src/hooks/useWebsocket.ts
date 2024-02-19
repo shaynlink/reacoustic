@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import Queue from '../Queue'
 
 export interface SocketHook {
   socket: WebSocket | null
@@ -21,8 +20,8 @@ type PayloadData = AuthentificationPayload
 export interface ResponseMessage<T extends PayloadData = PayloadData> {
   op: OpCodeClient
   d: T extends AuthentificationPayload
-  ? AuthentificationPayload
-  : PayloadData
+    ? AuthentificationPayload
+    : PayloadData
 }
 
 export interface AuthentificationPayload {
@@ -37,7 +36,7 @@ interface Subscription {
   op: OpCodeClient
 }
 
-export default function useSocket(): SocketHook {
+export default function useSocket (): SocketHook {
   const [socket, setSocket] = useState<SocketHook['socket']>(null)
   const [socketReady, setSocketReady] = useState<boolean>(false)
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([])
