@@ -8,6 +8,9 @@ dependencies:
   '@mui/icons-material':
     specifier: ^5.15.10
     version: 5.15.10(@mui/material@5.15.10)(@types/react@18.2.53)(react@18.2.0)
+  jotai:
+    specifier: ^2.6.4
+    version: 2.6.4(@types/react@18.2.53)(react@18.2.0)
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -17,6 +20,9 @@ dependencies:
   react-router-dom:
     specifier: ^6.22.0
     version: 6.22.0(react-dom@18.2.0)(react@18.2.0)
+  react-slider:
+    specifier: ^2.0.6
+    version: 2.0.6(react@18.2.0)
 
 devDependencies:
   '@types/react':
@@ -2171,6 +2177,22 @@ packages:
       set-function-name: 2.0.1
     dev: true
 
+  /jotai@2.6.4(@types/react@18.2.53)(react@18.2.0):
+    resolution: {integrity: sha512-RniwQPX4893YlNR1muOtyUGHYaTD1fhEN4qnOuZJSrDHj6xdEMrqlRSN/hCm2fshwk78ruecB/P2l+NCVWe6TQ==}
+    engines: {node: '>=12.20.0'}
+    peerDependencies:
+      '@types/react': '>=17.0.0'
+      react: '>=17.0.0'
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      '@types/react': 18.2.53
+      react: 18.2.0
+    dev: false
+
   /js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -2498,6 +2520,15 @@ packages:
       react: '>=16.8'
     dependencies:
       '@remix-run/router': 1.15.0
+      react: 18.2.0
+    dev: false
+
+  /react-slider@2.0.6(react@18.2.0):
+    resolution: {integrity: sha512-gJxG1HwmuMTJ+oWIRCmVWvgwotNCbByTwRkFZC6U4MBsHqJBmxwbYRJUmxy4Tke1ef8r9jfXjgkmY/uHOCEvbA==}
+    peerDependencies:
+      react: ^16 || ^17 || ^18
+    dependencies:
+      prop-types: 15.8.1
       react: 18.2.0
     dev: false
 
