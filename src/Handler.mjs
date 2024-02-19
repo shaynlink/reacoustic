@@ -38,13 +38,9 @@ export default function handler() {
       res.status(400).json({ error: 'No playlist found' });
       return;
     }
-
-    const playlistId = /https:\/\/www.youtube.com\/playlist\?list=([A-Za-z1-9-]+)/.exec(playlist)[1];
-
-    const songs = await Youtube.getPlaylistItems(playlistId);
+    const songs = await Youtube.getPlaylistItems(playlist);
 
     const parsedSongs = songs.map((song) => {
-      console.log(song)
       const title = song.snippet.title;
       const parsedTitlle = title.replace(/\(.+\)|\[.+\]|(\/\/.+)/gm, '').trim();
 
