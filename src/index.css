@@ -18,6 +18,7 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
@@ -28,41 +29,278 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #C9F0F8;
+  justify-content: center;
+  align-items: center;
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  color: #03045E;
+  position: fixed;
+  left: 50%;
+  transform: translate(-50%, 0);
+  top: 3%;
+  font-size: 70px;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+.center {
+  position: fixed;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 35px;
+}
+
+.button {
+  background-color: #0077B8;
+  border-radius: 25px;
+  border: none;
+  width: 350px;
+  height: 80px;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  font-size: 40px;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.buttonInput {
+  background-color: hsl(201, 100%, 36%);
+  border-radius: 25px;
+  border: none;
+  width: 350px;
+  height: 140px;
+  font-weight: 500;
+  font-size: 40px;
+  margin-top: 30px;
+}
+
+.input {
+  background-color: #00B4D8;
+  border: none;
+  border-radius: 15px;
+  width: 250px;
+  height: 40px;
+}
+
+input::placeholder {
+  color: white;
+  text-align: center;
+
+}
+
+.lobby-container {
+  place-items: center;
+  width: 100%;
+}
+
+.line-room {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 5px;
+}
+
+.stat-room {
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+  width: 100%;
+  font-size: 20px;
+  text-align: center;
+}
+
+.settings {
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.player-list {
+  background-color: #0077B8;
+  list-style: none;
+  border-radius: 15px;
+  padding: 15px;
+}
+
+.player-item {
+  background-color: #00B4D8;
+  border-radius: 10px;
+  padding: 8px;
+  margin-bottom: 5px;
+  font-size: 18px;
+  color: white;
+}
+
+.playerName-homeButton {
+  display: flex;
+  flex-direction: column;
+}
+
+.current-player {
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+  width: 100%;
+}
+
+.home-button {
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.link {
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+.game-code {
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+  width: 100%;
+  margin-left: 10px;
+  font-size: 20px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.start-game-btn {
+  background-color: #0077B8;
+  border-radius: 15px;
+  border: none;
+  color: white;
+  padding: 15px;
+  font-size: 15px;
+  margin-top: 10px;
+  width: 100%;
+  padding-left: 80px;
+  padding-right: 80px;
+}
+
+.end-game-body {
+  /*centrer les item*/
+}
+
+.scoreboard-container {
+  background-color: #0077B8;
+  color: white;
+  border-radius: 15px;
+  padding: 15px;
+  font-family: Arial, sans-serif;
+  margin-bottom: 20px;
+}
+
+.player-scores {
+  list-style: none;
+  padding: 0;
+}
+
+.player-score-item {
+  background-color: #00B2D6;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.score {
+  font-weight: bold;
+}
+
+.restart-game-btn,
+.leave-game-btn {
+  background-color: #0077B8;
+  border: none;
+  color: white;
+  margin-bottom: 10px;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 15px;
+  padding: 15px;
+  font-size: 20px;
+}
+
+.game {
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.time-bar {
+  height: 15px;
+  background-color: #8FE1EF; 
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.time-progress {
+  height: 100%;
+  background-color: #00B2D6; 
+  border-radius: 10px;
+}
+
+.score-text {
+  text-align: center;
+  margin-bottom: 20px;
+  
+  color: #03045E;
+  font-weight: bold;
+  font-size: 25px;
+
+}
+
+.track-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.track-button {
+  background-color: #0077B8; 
+  color: white; 
+  border: none;
+  border-radius: 10px;
+  padding: 12px; 
+  cursor: pointer;
+  padding-left: 30px;
+  padding-right: 30px;
+  font-size: 20px;
+}
+
+.track-button:hover {
+  opacity: 0.8; 
+}
+
+
+.Settings{
+  justify-content: space-between;
+  background-color: #0077B8;
+  border-radius: 15px;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+.Slider{
+  -webkit-appearance: none;
+  appearance: none;
+  background: #00B4D8;
+  border:'1px solid blue';
+  border-radius: 5px;
+  outline: none;
+  height: 2px;
+}
+
+.Slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 100px;
+  background: #00B4D8;
+  cursor: pointer;
 }
