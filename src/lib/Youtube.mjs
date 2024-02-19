@@ -15,7 +15,7 @@ export default class Youtube {
     while (!lastPage) {
       const payload = {
         auth: auth,
-        part: 'contentDetails',
+        part: 'contentDetails, snippet',
         playlistId: playlistId,
         maxResults: 50
       }

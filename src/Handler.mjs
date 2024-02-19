@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import Node from './class/Node.mjs';
+import Youtube from './lib/Youtube.mjs';
+import ytdl from 'ytdl-core';
 
 export default function handler() {
   // Use express.json() to parse the body of the request
@@ -10,23 +12,60 @@ export default function handler() {
   this.app.use(cors());
 
   // Middleware to check if the user is authenticated
-  this.app.use((req, res, next) => {
-    if (!req.headers['x-uuid-authorization']) {
-      res.status(401).json({ error: 'Need authenticate first' });
-      return;
-    }
+  // this.app.use((req, res, next) => {
+  //   if (!req.headers['x-uuid-authorization']) {
+  //     res.status(401).json({ error: 'Need authenticate first' });
+  //     return;
+  //   }
 
-    if (!this.users.has(req.headers['x-uuid-authorization'])) {
-      res.status(401).json({ error: 'No user found' });
-      return;
-    }
-    req.user = this.users.get(req.headers['x-uuid-authorization']);
-    next();
-  })
+  //   if (!this.users.has(req.headers['x-uuid-authorization'])) {
+  //     res.status(401).json({ error: 'No user found' });
+  //     return;
+  //   }
+  //   req.user = this.users.get(req.headers['x-uuid-authorization']);
+  //   next();
+  // })
 
   // Get all users
   this.app.get('/users', (req, res) => {
     res.status(202).json(this.users.toJSON());
+  })
+
+  this.app.get('/getSongs', async (req, res) => {
+    const playlist = req.body.playlist;
+
+    if (!playlist) {
+      res.status(400).json({ error: 'No playlist found' });
+      return;
+    }
+
+    const playlistId = /https:\/\/www.youtube.com\/playlist\?list=([A-Za-z1-9-]+)/.exec(playlist)[1];
+
+    const songs = await Youtube.getPlaylistItems(playlistId);
+
+    const parsedSongs = songs.map((song) => {
+      console.log(song)
+      const title = song.snippet.title;
+      const parsedTitlle = title.replace(/\(.+\)|\[.+\]|(\/\/.+)/gm, '').trim();
+
+      return {
+        ...song,
+        parsedTitlle
+      }
+    })
+
+    return res.status(202).json(parsedSongs);
+  })
+
+  this.app.get('/stream', (req, res) => {
+    if (!req.query.id) {
+      res.status(400).json({ error: 'No url found' });
+      return;
+    }
+
+    const id = req.query.id;
+
+    ytdl(`https://youtube.com/watch?v=${id}`, { filter: 'audioonly' }).pipe(res);
   })
 
   // Get current connected user
@@ -90,62 +129,62 @@ export default function handler() {
 
   // Update the current node
   this.app.patch('/nodes/me',
-  // Middleware to check data integrity
-  (req, res, next) => {
-    if (req.body.paylistUrl) {
-      if (!/https:\/\/www.youtube.com\/playlist\?list=([A-Za-z1-9-]+)/.test(req.body.paylistUrl)) {
-        res.status(400).json({ error: 'Invalid playlist url' });
+    // Middleware to check data integrity
+    (req, res, next) => {
+      if (req.body.paylistUrl) {
+        if (!/https:\/\/www.youtube.com\/playlist\?list=([A-Za-z1-9-]+)/.test(req.body.paylistUrl)) {
+          res.status(400).json({ error: 'Invalid playlist url' });
+          return;
+        }
+      }
+
+      if (req.body.songNumber) {
+        if (req.body.songNumber < 1) {
+          res.status(400).json({ error: 'Song number is too low' });
+          return;
+        }
+        if (req.body.songNumber > 150) {
+          res.status(400).json({ error: 'Song number is too high' });
+          return;
+        }
+      }
+
+      if (req.body.songExtractCount) {
+        if (req.body.songExtractCount < 1) {
+          res.status(400).json({ error: 'Song extract count is too low' });
+          return;
+        }
+        if (req.body.songExtractCount > 50) {
+          res.status(400).json({ error: 'Song extract count is too high' });
+          return;
+        }
+      }
+
+      if (req.body.numberOfChoice) {
+        if (req.body.numberOfChoice < 2) {
+          res.status(400).json({ error: 'Number of choice is too low' });
+          return;
+        }
+        if (req.body.numberOfChoice > 10) {
+          res.status(400).json({ error: 'Number of choice is too high' });
+          return;
+        }
+      }
+
+      next();
+    },
+    // Update the node
+    (req, res) => {
+      const node = this.nodes
+        .find((node) => node.users.has(req.user.uuid))
+
+      if (!node) {
+        res.status(404).json({ error: 'No node found' });
         return;
       }
-    }
 
-    if (req.body.songNumber) {
-      if (req.body.songNumber < 1) {
-        res.status(400).json({ error: 'Song number is too low' });
-        return;
-      }
-      if (req.body.songNumber > 150) {
-        res.status(400).json({ error: 'Song number is too high' });
-        return;
-      }
-    }
+      node.setParameters(req.body);
 
-    if (req.body.songExtractCount) {
-      if (req.body.songExtractCount < 1) {
-        res.status(400).json({ error: 'Song extract count is too low' });
-        return;
-      }
-      if (req.body.songExtractCount > 50) {
-        res.status(400).json({ error: 'Song extract count is too high' });
-        return;
-      }
-    }
-
-    if (req.body.numberOfChoice) {
-      if (req.body.numberOfChoice < 2) {
-        res.status(400).json({ error: 'Number of choice is too low' });
-        return;
-      }
-      if (req.body.numberOfChoice > 10) {
-        res.status(400).json({ error: 'Number of choice is too high' });
-        return;
-      }
-    }
-
-    next();
-  },
-  // Update the node
-  (req, res) => {
-    const node = this.nodes
-      .find((node) => node.users.has(req.user.uuid))
-
-    if (!node) {
-      res.status(404).json({ error: 'No node found' });
-      return;
-    }
-
-    node.setParameters(req.body);
-
-    res.status(202).json(node.toJSON());
-  })
+      res.status(202).json(node.toJSON());
+    })
 }

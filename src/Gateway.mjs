@@ -84,20 +84,31 @@ export default class Gateway {
     const payload = JSON.parse(message);
     console.log('-> Received message', payload)
 
-    console.log('ws.uuid', ws.uuid);
-
+    /**
+     * @type {User}
+     */
+    let user;
     // If the user is not authenticated, terminate the connection with 1002 code
     if (payload.op !== 'authentification' && !this.users.has(ws.uuid)) {
       // 1005 need authenticate first
       ws.terminate(1002, 'Need authenticate first');
       return;
+    } else {
+      user = this.users.get(ws.uuid);
     }
 
     switch (payload.op) {
       case 'authentification':
         // Authentificate the user
-        this.authentificate(ws, payload.d);
+        this.authentificate(ws, payload.d ?? {});
         break;
+      case 'state':
+        if (!payload?.d?.uuid && !this.nodes.has(payload.d.uuid)) {
+          user.send('error', { message: 'Node not found' });
+          return
+        }
+
+        const node = this.nodes.get(payload.d.uuid);
       default:
         console.error('Unknown message type');
     }
@@ -109,7 +120,7 @@ export default class Gateway {
      * @type {User}
      */
     let user;
-    if (userInfo.uuid) {
+    if (userInfo?.uuid) {
       user = this.users.getOrCreate(userInfo.uuid, new User());
     } else {
       user = new User();

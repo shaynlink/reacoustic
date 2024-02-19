@@ -1,7 +1,7 @@
 import { v4 } from 'uuid';
 import Collection from '../helpers/Collection.mjs';
 import Youtube from '../lib/Youtube.mjs';
-import { shortSafeId } from '../helpers/id.mjs';
+import { shortSafeId, shortUnsafeId } from '../helpers/id.mjs';
 
 export default class Node {
   constructor(user) {
@@ -27,7 +27,9 @@ export default class Node {
 
     // Parsed videos from the playlist
     this.videos = [];
-    //this.timerPerSong = 10;
+    this.timerPerSong = 10;
+    
+    this.gameStarted = false;
   }
 
   // Prepare the node before starting the game
@@ -44,11 +46,69 @@ export default class Node {
     this.videos = videos.slice(0, this.songNumber);
   }
 
+  async startGame() {
+    this.gameStarted = true;
+    
+    let hash = shortUnsafeId();
+
+    this.broadcast('game:start', {
+      hash,
+      gameStart: this.gameStarted
+    })
+
+    await this.waitForUsers(hash);
+  }
+
+  broadcast(op, d) {
+    for (const user of this.users.values()) {
+      const ws = this.users.get(user.uuid).ws;
+      ws.send(JSON.stringify({ op, d }));
+    }
+  }
+
   // Get the base user data
   getBaseUserData() {
     return {
       points: 0,
       answers: [],
+      nextHash: null
+    }
+  }
+
+  setState(uuid, hash) {
+    this.users.get(uuid).nextHash = hash;
+  }
+
+  async waitForUsers(hash) {
+    let allUsersReady = false;
+    const interval = setInterval(() => {
+      for (const user of this.users.values()) {
+        if (user.nextHash !== hash) {
+          allUsersReady = false;
+          break;
+        }
+        allUsersReady = true;
+      }
+      if (allUsersReady) {
+        this.startRound();
+      }
+    }, 1000);
+
+    setTimeout(() => {
+      if (!allUsersReady) {
+        clearInterval(interval);
+      }
+      for (const user of this.users.values()) {
+        if (user.nextHash !== hash) {
+          user.ws.send('error', { message: 'Timeout' });
+          this.users.delete(user.uuid);
+        }
+      }
+    }, 1000 * 60);
+
+    if (allUsersReady) {
+      clearInterval(interval);
+      this.startRound();
     }
   }
 
